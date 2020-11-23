@@ -3,7 +3,7 @@
 # Goal
 The goal of this project was to replicate a StreamDeck as closely as possible using an Arduino(clone).
 
-# Function
+# Function of the device
 This project can execute API calls and Websocket commands. 
 A txt file in JSON format can be loaded unto the Arduino SPIFFS memory which will contain the commands for the calls & commands.
 Each file contains multiple pages (Up to 8 pages because of the RAM limitations) and each page contains up to 15 buttons.
@@ -11,7 +11,7 @@ It is possible to swap between files by pressing button 16 and selecting the pag
 While creating editing the JSON files with buttons and pages the order matters. The order on the page/button corresponds with the button number.
 For example 6th button on the page can be selected by pressing button number 6.
 
-# Using the "MacroBoard"
+# Using the device
 ## Connecting to WiFi
 When the software boots it will start to look for WiFi access points that are stored in its memory. 
 If none are found the Arduino will go into AP mode and create an ap called "MacroBoardWifiConnect".
@@ -136,4 +136,7 @@ It will be added to this repo and has to be pasted to ~/Documents/Arduino/librar
 # Roadmap
 TBD
 
+# Useful information on programming for ESP8266 (Wemos D1 R1)
+- [Set up Arduino IDE to work with Wemos D1 R1](https://www.instructables.com/Arduino-WeMos-D1-WiFi-UNO-ESP-8266-IoT-IDE-Compati/)
+- [Upload sketch data tp ESP8266](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide/)
 
