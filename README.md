@@ -148,5 +148,5 @@ TBD
 
 # Useful information on programming for ESP8266 (Wemos D1 R1)
 - [Set up Arduino IDE to work with Wemos D1 R1](https://www.instructables.com/Arduino-WeMos-D1-WiFi-UNO-ESP-8266-IoT-IDE-Compati/)
-- [Upload sketch data tp ESP8266](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide/)
+- [Upload sketch data to ESP8266](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide/)
 
