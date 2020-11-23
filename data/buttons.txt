@@ -1,0 +1,25 @@
+{
+	"pages":
+		[
+			{
+				"name":"Some page",
+				"buttons":
+				[
+				
+					{
+						"command_id" : 130,
+						"type": "socket",
+						"description": "Random"
+					},
+					{
+						"url" : "http://randomurl.com",
+						"type": "apiCall",
+						"description": "Random"
+					}
+				]
+			}
+				
+		]
+}
+
+			
