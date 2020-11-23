@@ -132,6 +132,7 @@ It will be added to this repo and has to be pasted to ~/Documents/Arduino/librar
 - [ESP8266 Core](https://github.com/esp8266/Arduino)
 - [Uploading files to Arduino](https://tttapa.github.io/ESP8266/Chap12%20-%20Uploading%20to%20Server.html)
 - [Downloading file from SPIFFS](https://github.com/G6EJD/ESP32-8266-File-Download)
+- [Socket IO Client Library for ESP8266](https://github.com/timum-viw/socket.io-client)
 
 # How to get Deckboard data
 - Open deckboard_getData folder.
