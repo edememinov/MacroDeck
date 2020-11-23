@@ -1,0 +1,19 @@
+{
+  "name": "websocket_test",
+  "version": "1.0.0",
+  "description": "Ik eet kaas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Henk",
+  "license": "ISC",
+  "dependencies": {
+    "follow-redirects": "^1.13.0",
+    "ip": "^1.1.5",
+    "json-concat": "0.0.1",
+    "lodash.isequal": "^4.5.0",
+    "socket.io-client": "^2.3.1",
+    "websocket": "^1.0.32"
+  }
+}
