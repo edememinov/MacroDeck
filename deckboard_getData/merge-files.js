@@ -3,12 +3,10 @@ const fs = require('fs');
 var isEqual = require('lodash.isequal');
 var _ = require('lodash');
 
-// an array of filenames to concat
 const files = [];
 
-const theDirectory = "data/"; // or whatever directory you want to read
+const theDirectory = "data/"; 
 fs.readdirSync(theDirectory).forEach((file) => {
-  // you may want to filter these by extension, etc. to make sure they are JSON files
   files.push(file);
 })
 

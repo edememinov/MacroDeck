@@ -1,17 +1,9 @@
-
 const fs = require('fs');
 const io = require("socket.io-client");
 var ip = require('ip');
-const readline = require("readline");
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+
 
 var responseJson;
-
-
-
 
 var localIp = ip.address();
 const socket = io("http://" + localIp + ":8500", {
@@ -19,8 +11,6 @@ const socket = io("http://" + localIp + ":8500", {
 		access_key: "DCKBRD_PRO_1_3_0"
 	}
 });
-
-
 
 socket.on('reconnect_attempt', () => {
   socket.io.opts.transports = ['polling', 'websocket'];
@@ -32,10 +22,6 @@ socket.on('error', (result) => {
 });
 
 socket.on('connect', function(){
-	console.log("connected");
-	
-	
-	
 	
 	socket.emit("get_shortcuts",{});
 	
@@ -44,7 +30,6 @@ socket.on('connect', function(){
 		newJson.buttons = [];
 
 		socket.emit("get_version",{});
-		
 		
 		for(var i = 0; i < response.length;i++){
 			if(response[i] != undefined){
