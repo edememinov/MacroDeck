@@ -16,7 +16,6 @@ For example 6th button on the page can be selected by pressing button number 6.
 When the software boots it will start to look for WiFi access points that are stored in its memory. 
 If none are found the Arduino will go into AP mode and create an ap called "MacroBoardWifiConnect".
 After connecting to "MacroBoardWifiConnect" visit the following ip-address: 192.168.4.1. There a WiFi AP can be chosen to connect to. 
-[WiFi manager that was used](https://github.com/tzapu/WiFiManager).
 
 ## Configuring the device
 The following variables can be set in the config.txt file:
