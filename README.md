@@ -36,7 +36,8 @@ With this interface files can be uploaded, downloaded and deleted from the Ardui
 ## Executing WebSocket commands.
 To execute WebSocket commands this project heavily relies on [Deckboard](https://github.com/rivafarabi/deckboard).
 After installing Deckboard a script can be run to download the Deckboard button configuration. 
-This script will get all available buttons and write them in the correct JSON format. Afterwards these buttons can be copy-pasted into a file used by Macro Board The type of button should be a "socket" in this case.
+This script will get all available buttons and write them in the correct JSON format. Afterwards these buttons can be copy-pasted into a file used by Macro Board. 
+The button type should be a "socket" in this case.
 
 ```JSON
 {
