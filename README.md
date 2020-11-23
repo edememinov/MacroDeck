@@ -134,12 +134,12 @@ It will be added to this repo and has to be pasted to ~/Documents/Arduino/librar
 - [Downloading file from SPIFFS](https://github.com/G6EJD/ESP32-8266-File-Download)
 
 # How to get Deckboard data
-Open deckboard_getData folder.
-Run "npm install"
-Run "node index.js"
-Wait for it to finish. This should take around 5 seconds.
-Press ctr+c to force quit.
-Run "node mergeFiles.js"
+- Open deckboard_getData folder.
+- Run "npm install"
+- Run "node index.js"
+- Wait for it to finish. This should take around 5 seconds.
+- Press ctr+c to force quit.
+- Run "node mergeFiles.js"
 
 The folder finalData will contain finalButton.js, this file contains all the deckboard buttons with a name.
 
