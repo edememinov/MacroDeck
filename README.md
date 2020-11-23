@@ -126,12 +126,12 @@ User_Setup.h is needed to make the screen work. It holds the configuration and p
 It will be added to this repo and has to be pasted to ~/Documents/Arduino/libraries/TFT_eSPI/User_Setup.h
 
 # Other projects used within this project
--[Deckboard](https://github.com/rivafarabi/deckboard)
--[WiFi manager](https://github.com/tzapu/WiFiManager)
--[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
--[ESP8266 Core](https://github.com/esp8266/Arduino)
--[Uploading files to Arduino](https://tttapa.github.io/ESP8266/Chap12%20-%20Uploading%20to%20Server.html)
--[Downloading file from SPIFFS](https://github.com/G6EJD/ESP32-8266-File-Download)
+- [Deckboard](https://github.com/rivafarabi/deckboard)
+- [WiFi manager](https://github.com/tzapu/WiFiManager)
+- [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+- [ESP8266 Core](https://github.com/esp8266/Arduino)
+- [Uploading files to Arduino](https://tttapa.github.io/ESP8266/Chap12%20-%20Uploading%20to%20Server.html)
+- [Downloading file from SPIFFS](https://github.com/G6EJD/ESP32-8266-File-Download)
 
 # Roadmap
 TBD
