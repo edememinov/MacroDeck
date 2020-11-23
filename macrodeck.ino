@@ -34,17 +34,8 @@ void setup() {
   Serial.begin(115200);  
   delay(100);
   WiFi.mode(WIFI_STA);
-
- 
-
-  
-  
-  
   wifiManager.setTimeout(180);
   wifiManager.autoConnect("MacroBoardWifiConnect");
-  
-  
-  
   initiateScreen();
   showIpAddress();
   initiateSocket();
@@ -62,18 +53,13 @@ void setup() {
       buttons = doc.as<JsonObject>();
       client.begin(configJson["socketHost"].as<char*>(), configJson["socketPort"].as<int>(), path);
       setCurrentBoard();
-      interateOverButtonsOnPage();
-      
+      interateOverButtonsOnPage();  
   }else{
     tft.setTextColor(TFT_RED, TFT_WHITE);
     tft.println("An error has occured, please fix the error and restart the device.");
     tft.println("The web-interface is available.");
   }
   initiateAPI();
-  
-  
-  
-  
 }
 
 

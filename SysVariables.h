@@ -1,13 +1,10 @@
 //All availables variables are here
-
 #define ServerVersion "1.0"
 String webpage = "";
 bool   SD_present = false;
 
 //Wifi Manager
 WiFiManager wifiManager;
-
-
 
 //Button Wemos D1 pin
 const int AD_PIN = A0;

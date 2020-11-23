@@ -10,21 +10,17 @@ void SendHTML_Header() {
   webpage = "";
 }
 
-
 //Draws content
 void SendHTML_Content() {
   webserver.sendContent(webpage);
   webpage = "";
 }
 
-
 //Stops the client
 void SendHTML_Stop() {
   webserver.sendContent("");
-  webserver.client().stop(); // Stop is needed because no content length was sent
+  webserver.client().stop();
 }
-
-
 
 //Shows the end user that the file does not exist
 void ReportFileNotPresent(String target) {
@@ -36,14 +32,13 @@ void ReportFileNotPresent(String target) {
   SendHTML_Stop();
 }
 
-
 //Select input for the download and delete page
 void SelectInput(String heading1, String heading2, String command, String arg_calling_name) {
   dir = SPIFFS.openDir("/");
   SendHTML_Header();
   webpage += F("<h3 class='rcorners_m'>"); webpage += heading1 + "</h3><br>";
   webpage += F("<h3>"); webpage += heading2 + "</h3>";
-  webpage += F("<FORM action='/"); webpage += command + "' method='post'>"; // Must match the calling argument e.g. '/chart' calls '/chart' after selection but with arguments!
+  webpage += F("<FORM action='/"); webpage += command + "' method='post'>";
   webpage += F("<input type='text' name='"); webpage += arg_calling_name; webpage += F("' value=''><br>");
   webpage += F("<type='submit' name='"); webpage += arg_calling_name; webpage += F("' value=''><br><br>");
   webpage += "<h2> Available files:</h2>";
@@ -52,7 +47,6 @@ void SelectInput(String heading1, String heading2, String command, String arg_ca
     if(dir.fileName().endsWith(".txt")){
       webpage += "<li>" + dir.fileName() + "</li> </br>";
     }
-      
   }
   webpage += "</ol>";
   webpage += "</br>";
@@ -117,7 +111,7 @@ void SD_file_delete(String filename) {
 }
 
 //Gets args for the download
-void File_Download() { // This gets called twice, the first pass selects the input, the second pass then processes the command line arguments
+void File_Download() {
   if (webserver.args() > 0 ) { // Arguments were received
     if (webserver.hasArg("download")){ 
       SD_file_download(webserver.arg(0));
@@ -128,8 +122,8 @@ void File_Download() { // This gets called twice, the first pass selects the inp
 }
 
 //Gets args for the delete function
-void File_Delete() { // This gets called twice, the first pass selects the input, the second pass then processes the command line arguments
-  if (webserver.args() > 0 ) { // Arguments were received
+void File_Delete() { 
+  if (webserver.args() > 0 ) { 
     if (webserver.hasArg("delete")){ 
       SD_file_delete(webserver.arg(0));
       
@@ -138,9 +132,8 @@ void File_Delete() { // This gets called twice, the first pass selects the input
   else SelectInput("File Delete", "Enter filename to delete", "delete", "delete");
 }
 
-
 //Gets the content for the uploaded file
-String getContentType(String filename) { // convert the file extension to the MIME type
+String getContentType(String filename) {
   if (filename.endsWith(".html")) return "text/html";
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
@@ -149,44 +142,42 @@ String getContentType(String filename) { // convert the file extension to the MI
   return "text/plain";
 }
 
-
 //Returns file to user if available
-bool handleFileRead(String path) { // send the right file to the client (if it exists)
+bool handleFileRead(String path) {
   Serial.println("handleFileRead: " + path);
-  if (path.endsWith("/")) path += "index.html";          // If a folder is requested, send the index file
-  String contentType = getContentType(path);             // Get the MIME type
+  if (path.endsWith("/")) path += "index.html";          
+  String contentType = getContentType(path);          
   String pathWithGz = path + ".gz";
-  if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) { // If the file exists, either as a compressed archive, or normal
-    if (SPIFFS.exists(pathWithGz))                         // If there's a compressed version available
-      path += ".gz";                                         // Use the compressed verion
-    File file = SPIFFS.open(path, "r");                    // Open the file
-    size_t sent = webserver.streamFile(file, contentType);    // Send it to the client
-    file.close();                                          // Close the file again
+  if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) { 
+    if (SPIFFS.exists(pathWithGz))                         
+      path += ".gz";                                         
+    File file = SPIFFS.open(path, "r");                   
+    size_t sent = webserver.streamFile(file, contentType);   
+    file.close();                                        
     Serial.println(String("\tSent file: ") + path);
     return true;
   }
-  Serial.println(String("\tFile Not Found: ") + path);   // If the file doesn't exist, return false
+  Serial.println(String("\tFile Not Found: ") + path);
   return false;
 }
 
-
 //Handles file upload
-void handleFileUpload(){ // upload a new file to the SPIFFS
+void handleFileUpload(){ 
   HTTPUpload& upload = webserver.upload();
   if(upload.status == UPLOAD_FILE_START){
     String filename = upload.filename;
     if(!filename.startsWith("/")) filename = "/"+filename;
     Serial.print("handleFileUpload Name: "); Serial.println(filename);
-    fsUploadFile = SPIFFS.open(filename, "w");            // Open the file for writing in SPIFFS (create if it doesn't exist)
+    fsUploadFile = SPIFFS.open(filename, "w");            
     filename = String();
   } else if(upload.status == UPLOAD_FILE_WRITE){
     if(fsUploadFile)
-      fsUploadFile.write(upload.buf, upload.currentSize); // Write the received bytes to the file
+      fsUploadFile.write(upload.buf, upload.currentSize); 
   } else if(upload.status == UPLOAD_FILE_END){
-    if(fsUploadFile) {                                    // If the file was successfully created
-      fsUploadFile.close();                               // Close the file again
+    if(fsUploadFile) {                             
+      fsUploadFile.close();                              
       Serial.print("handleFileUpload Size: "); Serial.println(upload.totalSize);
-      webserver.sendHeader("Location","/success.html");      // Redirect the client to the success page
+      webserver.sendHeader("Location","/success.html");      
       webserver.send(303);
     } else {
       webserver.send(500, "text/plain", "500: couldn't create file");
@@ -194,29 +185,28 @@ void handleFileUpload(){ // upload a new file to the SPIFFS
   }
 }
 
-
 //Listens for requests
 void initiateAPI(){
   
-    webserver.on("/upload", HTTP_GET, []() {                 // if the client requests the upload page
-    if (!handleFileRead("/upload.html"))                // send it if it exists
-      webserver.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
+    webserver.on("/upload", HTTP_GET, []() {            
+    if (!handleFileRead("/upload.html"))               
+      webserver.send(404, "text/plain", "404: Not Found"); 
     });
 
-   // webserver.on("/", HTTP_GET, []() {                 // if the client requests the upload page
-   // if (!handleFileRead("/home.html"))                // send it if it exists
-   //   webserver.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
-   // });
+   webserver.on("/", HTTP_GET, []() {          
+    if (!handleFileRead("/home.html"))          
+      webserver.send(404, "text/plain", "404: Not Found"); 
+    });
   
-    webserver.on("/upload", HTTP_POST,                       // if the client posts to the upload page
-      [](){ webserver.send(200); },                          // Send status 200 (OK) to tell the client we are ready to receive
-      handleFileUpload                                    // Receive and save the file
+    webserver.on("/upload", HTTP_POST,                       
+      [](){ webserver.send(200); },                     
+      handleFileUpload                           
     );
 
   
-    webserver.onNotFound([]() {                              // If the client requests any URI
-      if (!handleFileRead(webserver.uri()))                  // send it if it exists
-        webserver.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
+    webserver.onNotFound([]() {                              
+      if (!handleFileRead(webserver.uri()))                 
+        webserver.send(404, "text/plain", "404: Not Found");
     });
 
     webserver.on("/download", File_Download);

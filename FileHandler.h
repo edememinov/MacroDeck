@@ -25,8 +25,6 @@ void pushAllFilesToJson(){
 }
 
 
-
-
 //The button files are desirialized to json
 void getButtonJSON(){
   if(amount_of_files > 0){
@@ -62,30 +60,19 @@ void getButtonJSON(){
 void getConfigJSON(){
   if(SPIFFS.exists(configFile)){
     File file = SPIFFS.open(configFile, "r");
-      // Allocate a temporary JsonDocument
-    // Don't forget to change the capacity to match your requirements.
-    // Use arduinojson.org/v6/assistant to compute the capacity.
-    
-  
-    // Deserialize the JSON document
     DeserializationError error = deserializeJson(configDoc, file);
     if (error){
       tft.setTextColor(TFT_RED, TFT_WHITE);
       tft.println("Error parsing config file");
       setErrorToTrue();
-      delay(5000);
-      
+      delay(5000);  
     }
-  
-  
-    // Close the file (Curiously, File's destructor doesn't close the file)
     file.close();
   }
   else{
     setErrorToTrue();
   }
 }
-
 
 //File changes based on user input
 void chooseFile(int keyNumber){

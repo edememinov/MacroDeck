@@ -21,8 +21,6 @@ void handleBoardChange(int keyNumber){
     tft.println(buttons["pages"][page]["buttons"].as<String>());
     interateOverButtonsOnPage();
   }
-  
-  
 }
 
 //Handles the socket command

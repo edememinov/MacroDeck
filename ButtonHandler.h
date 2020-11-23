@@ -8,7 +8,6 @@ void handleButtonPress(int keyNumber){
   else if(altKeyPressed && !chosingFile){
     handleBoardChange(keyNumber);
     altKeyPressed = false;
-    
   }
   else if(!altKeyPressed && !chosingFile){
     if(buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "socket"){
@@ -19,8 +18,6 @@ void handleButtonPress(int keyNumber){
       }else{
         handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>());
       }
-      
-      
     }
     else{
         tft.setTextColor(TFT_RED, TFT_WHITE);
@@ -30,7 +27,6 @@ void handleButtonPress(int keyNumber){
         error = true;
       }
   }
-  
 }
 
 //Figures out which button was pressed
