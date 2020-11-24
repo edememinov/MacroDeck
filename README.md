@@ -25,7 +25,7 @@ The following variables can be set in the config.txt file:
 {
 	"fingerprint" : "global SSL fingerprint",
 	"socketHost" : "IP address of the PC which is running DeckBoard",
-	"socketPort" : "DeckBoard port is always 8500"
+	"socketPort" : "DeckBoard port is always 8500",
 	//Optional
 	"development": true
 }
