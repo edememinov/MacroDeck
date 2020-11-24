@@ -26,6 +26,8 @@ The following variables can be set in the config.txt file:
 	"fingerprint" : "global SSL fingerprint",
 	"socketHost" : "IP address of the PC which is running DeckBoard",
 	"socketPort" : "DeckBoard port is always 8500"
+	//Optional
+	"development": true
 }
 
 ```
@@ -145,13 +147,14 @@ It will be added to this repo and has to be pasted to ~/Documents/Arduino/librar
 - Press ctr+c to force quit.
 - Run "node merge-files.js"
 
-The folder finalData will contain finalButton.js, this file contains all the deckboard buttons with a name.
+The folder finalData will contain finalButton.json, this file contains all the deckboard buttons with a name.
 
 # Roadmap
-- 3-D printed case for the Macro Board.
-- Bug fixes (none are know atm).
+- 3-D printed case for the MacroBoard
+- Bug fixes (none are know atm)
 - Improvements to user-experience
 - Code clean-up
+- Windows app to set up buttons and pages .txt file
 
 # Useful information on programming for ESP8266 (Wemos D1 R1)
 - [Set up Arduino IDE to work with Wemos D1 R1](https://www.instructables.com/Arduino-WeMos-D1-WiFi-UNO-ESP-8266-IoT-IDE-Compati/)
