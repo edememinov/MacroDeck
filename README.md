@@ -20,6 +20,7 @@ After connecting to "MacroBoardWifiConnect" visit the following ip-address: 192.
 ## Configuring the device
 The following variables can be set in the config.txt file:
 
+
 ```JSON
 {
 	"fingerprint" : "global SSL fingerprint",
@@ -28,6 +29,7 @@ The following variables can be set in the config.txt file:
 }
 
 ```
+*Side note: .json files are not supported by the system.*
 
 ## Using the Web Interface
 After the device is connected to WiFi a server ip-address will be displayed. Opening the ip-address in browser will open the web-interface.
