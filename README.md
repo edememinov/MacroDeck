@@ -150,7 +150,7 @@ The folder finalData will contain finalButton.json, this file contains all the d
 
 # Roadmap
 - 3-D printed case for the MacroBoard
-- Bug fixes (none are know atm)
+- Bug fixes (none are known atm)
 - Improvements to user-experience
 - Code clean-up
 - Windows app to set up buttons and pages .txt file
