@@ -39,6 +39,8 @@ After installing Deckboard a script can be run to download the Deckboard button 
 This script will get all available buttons and write them in the correct JSON format. Afterwards these buttons can be copy-pasted into a file used by Macro Board. 
 The button type should be a "socket" in this case.
 
+*Please note that if you are using DeckBoard Pro features, you should buy the* [DeckBoard Pro](https://play.google.com/store/apps/details?id=com.rivafarabi.deckboard.pro&hl=en&gl=US) *app from the Android Play Store, to support the developer.*
+
 ```JSON
 {
 	"pages":
