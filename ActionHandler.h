@@ -18,7 +18,6 @@ void handleBoardChange(int keyNumber){
     page = keyNumber - 1;
     setCurrentBoard();
     altKeyPressed = false;
-    tft.println(buttons["pages"][page]["buttons"].as<String>());
     interateOverButtonsOnPage();
   }
 }

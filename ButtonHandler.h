@@ -55,9 +55,9 @@ void getButton(){
       handleButtonPress(4);
      }
    }
-   else if(analogRead(AD_PIN) >= 660 && analogRead(AD_PIN) <= 730){
+   else if(analogRead(AD_PIN) >= 680 && analogRead(AD_PIN) <= 750){
     delay(50);
-    if(analogRead(AD_PIN) >= 660 && analogRead(AD_PIN) <= 730){
+    if(analogRead(AD_PIN) >= 680 && analogRead(AD_PIN) <= 750){
       handleButtonPress(5);
      }
    }
@@ -93,7 +93,9 @@ void getButton(){
    }
    else if(analogRead(AD_PIN) >= 470 && analogRead(AD_PIN) <= 500){
     delay(50);
-    handleButtonPress(11);
+    if(analogRead(AD_PIN) >= 470 && analogRead(AD_PIN) <= 500){
+      handleButtonPress(11);
+    }
    }
    else if(analogRead(AD_PIN) >= 450 && analogRead(AD_PIN) <= 475){
     delay(50);

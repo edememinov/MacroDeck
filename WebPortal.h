@@ -105,8 +105,11 @@ void SD_file_delete(String filename) {
   if (file) {
     file.close();
     SPIFFS.remove(filename);
-    webserver.sendHeader("Location","/download");
+    webserver.sendHeader("Location","/success.html");
+    //Reload all files
     pushAllFilesToJson();
+    getButtonJSON();
+    getConfigJSON();
   } else ReportFileNotPresent("delete");
 }
 
@@ -179,6 +182,10 @@ void handleFileUpload(){
       Serial.print("handleFileUpload Size: "); Serial.println(upload.totalSize);
       webserver.sendHeader("Location","/success.html");      
       webserver.send(303);
+      //Reload all files
+      pushAllFilesToJson();
+      getButtonJSON();
+      getConfigJSON();
     } else {
       webserver.send(500, "text/plain", "500: couldn't create file");
     }
