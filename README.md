@@ -26,7 +26,6 @@ The following variables can be set in the config.txt file:
 	"fingerprint" : "global SSL fingerprint",
 	"socketHost" : "IP address of the PC which is running DeckBoard",
 	"socketPort" : "DeckBoard port is always 8500",
-	//Optional
 	"development": true
 }
 
@@ -55,8 +54,8 @@ The button type should be a "socket" in this case.
 				[
 				
 					 {
-						"command_id": 27,//Deckboard command id
-						"type": "socket",//Type of command socket or apiCall
+						"command_id": 27,
+						"type": "socket",
 						"description": "Button Description"
 					}
 				]
@@ -66,7 +65,7 @@ The button type should be a "socket" in this case.
 
 			
 ```
-
+*command_id is the Deckboard id for the command. If generated through the node js script, this will be filled automatically*
 ## Executing API calls
 API Calls will be handled just like WebSocket commands. An example of a button which will handle an API Call can be found below.
 
@@ -79,8 +78,8 @@ API Calls will be handled just like WebSocket commands. An example of a button w
 				"buttons":
 				[
 					 {
-						"url": "http://url-to-the-api.com/getSomethingFromAPI",// API URL
-						"type": "apiCall",//Type of command socket or apiCall
+						"url": "http://url-to-the-api.com/getSomethingFromAPI",
+						"type": "apiCall",
 						"description": "Button Description",
             					"fingerprint":"optional SSL fingerprint. It can also be set globally in config.txt"
 					}
