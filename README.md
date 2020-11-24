@@ -90,7 +90,7 @@ API Calls will be handled just like WebSocket commands. An example of a button w
 
 			
 ```
-
+*[Get the website's SSL fingerprint certificate](https://www.grc.com/fingerprints.htm)*
 # Parts used
 
 For this project the following items were used:
