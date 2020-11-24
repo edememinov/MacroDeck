@@ -8,13 +8,13 @@ This project can execute API calls and Websocket commands.
 A txt file in JSON format can be loaded unto the Arduino SPIFFS memory which will contain the commands for the calls & commands.
 Each file contains multiple pages (Up to 8 pages because of the RAM limitations) and each page contains up to 15 buttons.
 It is possible to swap between files by pressing button 16 and selecting the page by pressing the corresponding button. 
-While creating editing the JSON files with buttons and pages the order matters. The order on the page/button corresponds with the button number.
+While creating/editing the JSON files with buttons and pages the order matters. The order on the page/button corresponds with the button number.
 For example 6th button on the page can be selected by pressing button number 6.
 
 # Using the device
 ## Connecting to WiFi
 When the software boots it will start to look for WiFi access points that are stored in its memory. 
-If none are found the Arduino will go into AP mode and create an ap called "MacroBoardWifiConnect".
+If none are found the Arduino will go into AP mode and create an AP called "MacroBoardWifiConnect".
 After connecting to "MacroBoardWifiConnect" visit the following ip-address: 192.168.4.1. There a WiFi AP can be chosen to connect to. 
 
 ## Configuring the device
@@ -22,7 +22,7 @@ The following variables can be set in the config.txt file:
 
 ```JSON
 {
-	"fingerprint" : "SSL fingerprint",
+	"fingerprint" : "global SSL fingerprint",
 	"socketHost" : "IP address of the PC which is running DeckBoard",
 	"socketPort" : "DeckBoard port is always 8500"
 }
@@ -72,12 +72,11 @@ API Calls will be handled just like WebSocket commands. An example of a button w
 				"name":"Page name",
 				"buttons":
 				[
-				
 					 {
 						"url": "http://url-to-the-api.com/getSomethingFromAPI",// API URL
 						"type": "apiCall",//Type of command socket or apiCall
 						"description": "Button Description",
-            "fingerprint":"optional SSL fingerprint. It can also be set globally in config.txt"
+            					"fingerprint":"optional SSL fingerprint. It can also be set globally in config.txt"
 					}
 				]
 			}	
@@ -140,12 +139,15 @@ It will be added to this repo and has to be pasted to ~/Documents/Arduino/librar
 - Run "node index.js"
 - Wait for it to finish. This should take around 5 seconds.
 - Press ctr+c to force quit.
-- Run "node mergeFiles.js"
+- Run "node merge-files.js"
 
 The folder finalData will contain finalButton.js, this file contains all the deckboard buttons with a name.
 
 # Roadmap
-TBD
+- 3-D printed case for the Macro Board.
+- Bug fixes (none are know atm).
+- Improvements to user-experience
+- Code clean-up
 
 # Useful information on programming for ESP8266 (Wemos D1 R1)
 - [Set up Arduino IDE to work with Wemos D1 R1](https://www.instructables.com/Arduino-WeMos-D1-WiFi-UNO-ESP-8266-IoT-IDE-Compati/)
