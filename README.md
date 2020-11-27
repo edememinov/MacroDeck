@@ -154,6 +154,7 @@ The folder finalData will contain finalButton.json, this file contains all the d
 - Improvements to user-experience
 - Code clean-up
 - Windows app to set up buttons and pages .txt file
+- Adding an Arduino Nano to read out the battery percentage
 
 # Useful information on programming for ESP8266 (Wemos D1 R1)
 - [Set up Arduino IDE to work with Wemos D1 R1](https://www.instructables.com/Arduino-WeMos-D1-WiFi-UNO-ESP-8266-IoT-IDE-Compati/)
