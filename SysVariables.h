@@ -46,5 +46,12 @@ String configFile = "/config.txt";
 DynamicJsonDocument configDoc(1024);
 JsonObject configJson;
 
+String buttonConfigFile = "/button_config.txt";
+DynamicJsonDocument buttonConfigDoc(2048);
+JsonObject buttonConfigJson;
+
 //Error
 bool error = false;
+
+//Button is pressed
+bool is_button_pressed = false;

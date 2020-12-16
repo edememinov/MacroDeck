@@ -33,8 +33,10 @@ void setup() {
   if(!error){
       getButtonJSON();
       getConfigJSON();
+      getButtonConfigJSON();
       configJson = configDoc.as<JsonObject>();
       buttons = doc.as<JsonObject>();
+      buttonConfigJson = buttonConfigDoc.as<JsonObject>();
       client.begin(configJson["socketHost"].as<char*>(), configJson["socketPort"].as<int>(), path);
       setCurrentBoard();
       interateOverButtonsOnPage();  
@@ -55,11 +57,11 @@ void loop() {
       
     }
     else{
-      getButton();   
+      handleButtonPress();   
     }
   }
   else{
-    getButton(); 
+    handleButtonPress();  
   } 
    
   delay(100);

@@ -10,9 +10,12 @@ void pushAllFilesToJson(){
   int i = 0;
   while (dir.next()) {
     if(dir.fileName().indexOf(".txt") > 0 && dir.fileName().indexOf("config.txt") == -1){
-      BUTTON_JSON[i] = String() + dir.fileName();
-      i++;
-      amount_of_files = i;
+      if(dir.fileName().indexOf("button_config.txt") == -1){
+          BUTTON_JSON[i] = String() + dir.fileName();
+          i++;
+          amount_of_files = i;
+      }
+     
     }
       
   }
@@ -40,6 +43,7 @@ void getButtonJSON(){
       if (error){
         tft.setTextColor(TFT_RED, TFT_WHITE);
         tft.println("Error parsing file: " + BUTTON_JSON[currentFile]);
+        tft.println(error.c_str());
         setErrorToTrue();
         delay(5000);
         
@@ -64,6 +68,7 @@ void getConfigJSON(){
     if (error){
       tft.setTextColor(TFT_RED, TFT_WHITE);
       tft.println("Error parsing config file");
+      tft.println(error.c_str());
       setErrorToTrue();
       delay(5000);  
     }
@@ -71,6 +76,32 @@ void getConfigJSON(){
   }
   else{
     setErrorToTrue();
+    tft.setTextColor(TFT_RED, TFT_WHITE);
+    tft.println("config.txt not found");
+    delay(5000); 
+  }
+}
+
+//The config file is desirialized to json
+void getButtonConfigJSON(){
+  if(SPIFFS.exists(buttonConfigFile)){
+    File file = SPIFFS.open(buttonConfigFile, "r");
+    DeserializationError error = deserializeJson(buttonConfigDoc, file);
+    if (error){
+      tft.setTextColor(TFT_RED, TFT_WHITE);
+      tft.println("Error parsing button_config file");
+      tft.println(error.c_str());
+      setErrorToTrue();
+      delay(5000);  
+    }
+    file.close();
+  }
+  else{
+    setErrorToTrue();
+    tft.setTextColor(TFT_RED, TFT_WHITE);
+    tft.println("button_config.txt not found");
+    tft.println("Buttons will not work");
+    delay(5000); 
   }
 }
 

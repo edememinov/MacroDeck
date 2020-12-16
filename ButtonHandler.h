@@ -29,109 +29,44 @@ void handleButtonPress(int keyNumber){
   }
 }
 
-//Figures out which button was pressed
-void getButton(){
-   if(analogRead(AD_PIN) >= 1020 && analogRead(AD_PIN) <= 1100){
-    delay(50);
-      if(analogRead(AD_PIN) >= 1020 && analogRead(AD_PIN) <= 1100){
-      handleButtonPress(1); 
+bool hasInput(){
+  return analogRead(AD_PIN) > buttonConfigJson["defaultValue"];
+}
+
+
+bool checkButtonValue(int minValue, int maxValue, int buttonId){
+  
+  if (analogRead(AD_PIN) >= minValue && analogRead(AD_PIN) <= maxValue){
+    if(buttonId == 16){
+      if(!altKeyPressed){
+            altKeyPressed = true;
+            interateOverPages();
+          }else if(altKeyPressed){
+            interateOverFiles();
+            chosingFile = true;
+          }
     }
-   }
-   else if(analogRead(AD_PIN) >= 970 && analogRead(AD_PIN) <= 1010){
-    delay(50);
-      if(analogRead(AD_PIN) >= 970 && analogRead(AD_PIN) <= 1010){
-      handleButtonPress(2);
+    else{
+      handleButtonPress(buttonId);
     }
-   }
-   else if(analogRead(AD_PIN) >= 850 && analogRead(AD_PIN) <= 950){
-    delay(50);
-      if(analogRead(AD_PIN) >= 850 && analogRead(AD_PIN) <= 950){
-        handleButtonPress(3);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 780 && analogRead(AD_PIN) <= 851){
-    delay(50);
-    if(analogRead(AD_PIN) >= 780 && analogRead(AD_PIN) <= 851){
-      handleButtonPress(4);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 680 && analogRead(AD_PIN) <= 750){
-    delay(50);
-    if(analogRead(AD_PIN) >= 680 && analogRead(AD_PIN) <= 750){
-      handleButtonPress(5);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 650 && analogRead(AD_PIN) <= 680){
-    delay(50);
-      if(analogRead(AD_PIN) >= 650 && analogRead(AD_PIN) <= 680){
-        handleButtonPress(6);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 620 && analogRead(AD_PIN) <= 645){
-    delay(50);
-    if(analogRead(AD_PIN) >= 620 && analogRead(AD_PIN) <= 645){
-      handleButtonPress(7);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 590 && analogRead(AD_PIN) <= 610){
-    delay(50);
-    if(analogRead(AD_PIN) >= 590 && analogRead(AD_PIN) <= 610){
-      handleButtonPress(8);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 520 && analogRead(AD_PIN) <= 550){
-    delay(50);
-    if(analogRead(AD_PIN) >= 520 && analogRead(AD_PIN) <= 550){
-      handleButtonPress(9);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 495 && analogRead(AD_PIN) <= 515){
-    delay(50);
-      if(analogRead(AD_PIN) >= 495 && analogRead(AD_PIN) <= 515){
-        handleButtonPress(10);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 470 && analogRead(AD_PIN) <= 500){
-    delay(50);
-    if(analogRead(AD_PIN) >= 470 && analogRead(AD_PIN) <= 500){
-      handleButtonPress(11);
-    }
-   }
-   else if(analogRead(AD_PIN) >= 450 && analogRead(AD_PIN) <= 475){
-    delay(50);
-    if(analogRead(AD_PIN) >= 450 && analogRead(AD_PIN) <= 475){
-      handleButtonPress(12);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 410 && analogRead(AD_PIN) <= 435){
-    delay(50);
-    if(analogRead(AD_PIN) >= 410 && analogRead(AD_PIN) <= 435){
-      handleButtonPress(13);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 330 && analogRead(AD_PIN) <= 350){
-    delay(50);
-    if(analogRead(AD_PIN) >= 330 && analogRead(AD_PIN) <= 350){
-      handleButtonPress(14);
-     }
-   }
-   else if(analogRead(AD_PIN) >= 280 && analogRead(AD_PIN) <= 310){
-    delay(50);
-    if(analogRead(AD_PIN) >= 280 && analogRead(AD_PIN) <= 310){
-      handleButtonPress(15);
-     }
-    
-   }
-   else if(analogRead(AD_PIN) >= 220 && analogRead(AD_PIN) <= 260){
-    delay(50);     
-      if(analogRead(AD_PIN) >= 220 && analogRead(AD_PIN) <= 260){     
-        if(!altKeyPressed){
-          altKeyPressed = true;
-          interateOverPages();
-        }else if(altKeyPressed){
-          interateOverFiles();
-          chosingFile = true;
-        }
-    }
-   }
+    is_button_pressed = true;
+  }
+}
+
+void iterateThroughButtons(){
+   for(int i = 0; i < buttonConfigJson["buttons"].size();i++){
+    checkButtonValue(buttonConfigJson["buttons"][i]["minValue"],buttonConfigJson["buttons"][i]["maxValue"], buttonConfigJson["buttons"][i]["buttonValue"]);
+  }
+  
+}
+
+
+void handleButtonPress(){
+  if(!hasInput() && is_button_pressed){
+    is_button_pressed = false;
+     
+  }
+  else if (hasInput() && !is_button_pressed){
+    iterateThroughButtons();
+  }
 }
