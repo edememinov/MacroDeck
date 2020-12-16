@@ -1,0 +1,86 @@
+{
+	"defaultValue": 20, 
+	"buttons":
+	[
+		{
+			"buttonValue": 1,
+			"minValue": 1020,
+			"maxValue": 1100
+		},
+		{
+			"buttonValue": 2,
+			"minValue": 970,
+			"maxValue": 1010
+		},
+		{
+			"buttonValue": 3,
+			"minValue": 850,
+			"maxValue": 950
+		},
+		{
+			"buttonValue": 4,
+			"minValue": 780,
+			"maxValue": 851
+		},
+		{
+			"buttonValue": 5,
+			"minValue": 680,
+			"maxValue": 750
+		},
+		{
+			"buttonValue": 6,
+			"minValue": 650,
+			"maxValue": 680
+		},
+		{
+			"buttonValue": 7,
+			"minValue": 620,
+			"maxValue": 645
+		},
+		{
+			"buttonValue": 8,
+			"minValue": 590,
+			"maxValue": 610
+		},
+		{
+			"buttonValue": 9,
+			"minValue": 520,
+			"maxValue": 550
+		},
+		{
+			"buttonValue": 10,
+			"minValue": 495,
+			"maxValue": 515
+		},
+		{
+			"buttonValue": 11,
+			"minValue": 470,
+			"maxValue": 500
+		},
+		{
+			"buttonValue": 12,
+			"minValue": 450,
+			"maxValue": 475
+		},
+		{
+			"buttonValue": 13,
+			"minValue": 410,
+			"maxValue": 435
+		},
+		{
+			"buttonValue": 14,
+			"minValue": 330,
+			"maxValue": 350
+		},
+		{
+			"buttonValue": 15,
+			"minValue": 280,
+			"maxValue": 310
+		},
+		{
+			"buttonValue": 16,
+			"minValue": 220,
+			"maxValue": 260
+		}
+	]
+}
