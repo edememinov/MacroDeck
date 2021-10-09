@@ -8,6 +8,7 @@
 #include <SPI.h>
 #include <ArduinoJson.h>
 
+
 #include "SysVariables.h"
 #include "ScreenHandler.h"
 #include "CSS.h"
@@ -16,6 +17,7 @@
 #include "ButtonHandler.h"
 #include "SocketHandler.h"
 #include "WebPortal.h"
+#include "Test.h"
 
 void setup() {
   Serial.begin(115200);  
@@ -26,6 +28,7 @@ void setup() {
   initiateScreen();
   showIpAddress();
   initiateSocket();
+  //webserver.enableCORS(true);
   webserver.begin();
   SPIFFS.begin();
   pushAllFilesToJson();
@@ -41,23 +44,28 @@ void setup() {
       setCurrentBoard();
       interateOverButtonsOnPage();  
   }else{
-    tft.setTextColor(TFT_RED, TFT_WHITE);
     tft.println("An error has occured, please fix the error and restart the device.");
     tft.println("The web-interface is available.");
   }
   initiateAPI();
+  if(configJson.containsKey("calibrationMode")){
+    if(configJson["calibrationMode"].as<bool>()){
+      clearScreen();
+      calibrateButtons(analogRead(AD_PIN));
+      showCalibrationComplete();
+      delay(2000);
+    }
+  }
 }
 
 void loop() {
    if(configJson.containsKey("development")){
     if(configJson["development"].as<bool>()){
-      if(analogRead(AD_PIN) > 20){
-        Serial.println(analogRead(AD_PIN));
-      }
-      
+      //Something useful, don't know what yet.
     }
     else{
-      handleButtonPress();   
+      handleButtonPress();  
+      
     }
   }
   else{

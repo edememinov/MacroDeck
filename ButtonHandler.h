@@ -70,3 +70,51 @@ void handleButtonPress(){
     iterateThroughButtons();
   }
 }
+
+void calibrateButtons(int pinV){
+  int offSet = (pinV*2);
+  buttonConfigDoc["defaultValue"] = pinV;
+  int lastButtonVoltMin = pinV - offSet;
+  int lastButtonVoltMax = pinV + offSet;
+  for(int i = 0; i < buttonConfigJson["buttons"].size();i++){
+    clearScreen();
+    tft.print("hold button :");
+    tft.println(i);
+
+    tft.println(analogRead(AD_PIN));
+
+    while((analogRead(AD_PIN) > (pinV - offSet)) && (analogRead(AD_PIN) < (pinV + offSet))){
+      delay(500);
+      tft.println(analogRead(AD_PIN));
+    }
+
+    while((analogRead(AD_PIN) > lastButtonVoltMin) && (analogRead(AD_PIN) < lastButtonVoltMax)){
+      delay(500);
+      tft.println(analogRead(AD_PIN));
+    }
+
+    
+    lastButtonVoltMin = analogRead(AD_PIN) - offSet;
+    lastButtonVoltMax = analogRead(AD_PIN) + offSet;
+
+    tft.println(analogRead(AD_PIN));
+    tft.println(lastButtonVoltMin);
+    tft.println(lastButtonVoltMax);
+    
+    
+    buttonConfigDoc["buttons"][i]["minValue"] = lastButtonVoltMin;
+    buttonConfigDoc["buttons"][i]["maxValue"] = lastButtonVoltMax;
+    buttonConfigDoc["buttons"][i]["buttonValue"] = i + 1;
+
+    tft.println("DONE");
+        
+    delay(2000);
+
+    
+  }
+
+  writeToButtonConfigFile();
+  configDoc["calibrationMode"] = false;
+  writeToConfigFile();
+  ESP.restart();
+}

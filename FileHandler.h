@@ -114,3 +114,29 @@ void chooseFile(int keyNumber){
   getButtonJSON();
   interateOverPages();
 }
+
+void writeToButtonConfigFile(){
+  File file = SPIFFS.open(buttonConfigFile, "w");
+  serializeJsonPretty(buttonConfigDoc, file);
+  
+  tft.println("Writing to doc");
+  tft.println(error);
+  file.close();
+}
+void writeToConfigFile(){
+  File file = SPIFFS.open(configFile, "w");
+  serializeJsonPretty(configDoc, file);
+  
+  tft.println("Writing to doc");
+  tft.println(error);
+  file.close();
+}
+
+void writeToButtonFile(){
+  File file = SPIFFS.open(configDoc["name"].as<String>() +".txt", "w");
+  serializeJsonPretty(doc, file);
+  
+  tft.println("Writing to doc");
+  tft.println(error);
+  file.close();
+}

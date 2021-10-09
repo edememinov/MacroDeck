@@ -192,6 +192,13 @@ void handleFileUpload(){
   }
 }
 
+void setCrossOrigin(){
+    webserver.sendHeader(F("Access-Control-Allow-Origin"), F("*"));
+    webserver.sendHeader(F("Access-Control-Max-Age"), F("10000"));
+    webserver.sendHeader(F("Access-Control-Allow-Methods"), F("*"));
+    webserver.sendHeader(F("Access-Control-Allow-Headers"), F("*"));
+};
+
 //Listens for requests
 void initiateAPI(){
   
@@ -210,10 +217,85 @@ void initiateAPI(){
       handleFileUpload                           
     );
 
-  
-    webserver.onNotFound([]() {                              
-      if (!handleFileRead(webserver.uri()))                 
+     webserver.on("/online", HTTP_GET,                       
+      [](){ webserver.send(200); }                                               
+    );
+
+    webserver.on("/getoptions", HTTP_GET, []() {
+      setCrossOrigin();
+      String buf;
+      serializeJson(configDoc, buf);
+      webserver.send(200, F("application/json"), buf);
+    });
+
+    webserver.on("/setoptions", HTTP_POST, []() {
+      setCrossOrigin();
+       String postBody = webserver.arg("plain");
+       DeserializationError error = deserializeJson(configDoc, postBody);
+       if(error){
         webserver.send(404, "text/plain", "404: Not Found");
+       }
+       writeToConfigFile();
+      webserver.send(200);
+      delay(500);
+      ESP.restart();
+    });
+
+    webserver.on("/getbuttonoptions", HTTP_GET, []() {
+      setCrossOrigin();
+      String buf;
+      serializeJson(buttonConfigDoc, buf);
+      webserver.send(200, F("application/json"), buf);
+    });
+
+    webserver.on("/setbuttonoptions", HTTP_POST, []() {
+      setCrossOrigin();
+       String postBody = webserver.arg("plain");
+       DeserializationError error = deserializeJson(buttonConfigDoc, postBody);
+       if(error){
+        webserver.send(404, "text/plain", "404: Not Found");
+       }
+      writeToButtonConfigFile();
+      webserver.send(200);
+      delay(500);
+      ESP.restart();
+    });
+
+    webserver.on("/getbuttons", HTTP_GET, []() {
+      setCrossOrigin();
+      String buf;
+      serializeJson(doc, buf);
+      webserver.send(200, F("application/json"), buf);
+    });
+
+    webserver.on("/setbuttons", HTTP_POST, []() {
+      setCrossOrigin();
+       String postBody = webserver.arg("plain");
+       DeserializationError error = deserializeJson(doc, postBody);
+       if(error){
+        webserver.send(404, "text/plain", "404: Not Found");
+       }
+       writeToButtonFile();
+      webserver.send(200);
+      delay(500);
+      ESP.restart();
+    });
+  
+    webserver.onNotFound([]() {
+      if (webserver.method() == HTTP_OPTIONS)
+      {
+          webserver.sendHeader("Access-Control-Allow-Origin", "*");
+          webserver.sendHeader("Access-Control-Max-Age", "10000");
+          webserver.sendHeader("Access-Control-Allow-Methods", "*");
+          webserver.sendHeader("Access-Control-Allow-Headers", "*");
+          webserver.send(204);
+      }
+      else
+      {
+          if (!handleFileRead(webserver.uri()))                 
+            webserver.send(404, "text/plain", "404: Not Found");
+      }                              
+      
     });
 
     webserver.on("/download", File_Download);

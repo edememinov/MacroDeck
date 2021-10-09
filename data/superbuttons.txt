@@ -1,8 +1,8 @@
 {
-	"pages":
+	"kak met nichten":
 		[
 			{
-				"name":"URL Saver",
+				"name":"Kaas eten is cool",
 				"buttons":
 				[
 				
@@ -30,12 +30,6 @@
 						"url" : "https://maker.ifttt.com/trigger/toggleLedStrip/with/key/fJOlW0DpSuY_h4auJ1l05",
 						"type": "apiCall",
 						"description": "Ledstrip on"
-					},
-					{
-						"url" : "https://maker.ifttt.com/trigger/toggleLedStrip/with/key/fJOlW0DpSuY_h4auJ1l05",
-						"type": "apiCall",
-						"description": "Ik eet kaas",
-						"fingerprint":"ik eet kaas"
 					}
 				]
 			}

@@ -12,6 +12,12 @@ void initiateScreen(){
   tft.fillRect(0,70,240,320, TFT_WHITE);
 }
 
+void clearScreen(){
+  tft.fillScreen(TFT_WHITE);
+  tft.setCursor(5, 32, 1);
+  
+}
+
 //Shows the local ip address on the screen
 void showIpAddress(){
   
@@ -89,4 +95,9 @@ void interateOverFiles(){
   tft.print(16);
   tft.print(" : ");
   tft.println("Choose different page");
+}
+
+void showCalibrationComplete(){
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.drawCentreString("Calibration complete",0, 32, 1);
 }

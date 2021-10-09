@@ -1,5 +1,5 @@
 {
-	"fingerprint" : "SSL Fingerprint",
-	"socketHost" : "192.168.1.29",
+	"fingerprint" : "24 8E 25 32 85 E5 E8 64 2C C9 94 41 1A B2 FB 84 36 2B DD 09",
+	"socketHost" : "192.168.1.3",
 	"socketPort" : "8500"
 }
