@@ -44,13 +44,13 @@ void SelectInput(String heading1, String heading2, String command, String arg_ca
   webpage += "<h2> Available files:</h2>";
   webpage += "<ol>";
   while (dir.next()) {
-    if(dir.fileName().endsWith(".txt")){
+    if (dir.fileName().endsWith(".txt")) {
       webpage += "<li>" + dir.fileName() + "</li> </br>";
     }
   }
   webpage += "</ol>";
   webpage += "</br>";
-  
+
   append_page_footer();
   SendHTML_Content();
   SendHTML_Stop();
@@ -62,12 +62,12 @@ void Free_space() {
   FSInfo fsInfo;
   SPIFFS.info(fsInfo);
   SendHTML_Header();
-  webpage += F("<h3 class='rcorners_m'>"); webpage +="Free space</h3><br>";
+  webpage += F("<h3 class='rcorners_m'>"); webpage += "Free space</h3><br>";
   webpage += "<h1>Used space: " + String() + fsInfo.usedBytes + " bytes </h1>";
   webpage += "<h1>Total space: " + String() + fsInfo.totalBytes + "bytes </h1>";
   webpage += "<h1>Free left: " + String() + (fsInfo.totalBytes - fsInfo.usedBytes) + "bytes</h1>";
-  webpage += "<h1>Free left percetage: " + String() + (100 - ((fsInfo.usedBytes/fsInfo.totalBytes)*100)) + "%</h1>";
-  
+  webpage += "<h1>Free left percetage: " + String() + (100 - ((fsInfo.usedBytes / fsInfo.totalBytes) * 100)) + "%</h1>";
+
   webpage += "<h2> Available files:</h2>";
   webpage += "<ol>";
   while (dir.next()) {
@@ -75,7 +75,7 @@ void Free_space() {
   }
   webpage += "</ol>";
   webpage += "</br>";
-  
+
   append_page_footer();
   SendHTML_Content();
   SendHTML_Stop();
@@ -83,7 +83,7 @@ void Free_space() {
 
 //Handles the file download
 void SD_file_download(String filename) {
-  if(!filename.startsWith("/")){
+  if (!filename.startsWith("/")) {
     filename = "/" + filename;
   }
   File download = SPIFFS.open(filename, "r");
@@ -98,14 +98,14 @@ void SD_file_download(String filename) {
 
 //Handles file delete
 void SD_file_delete(String filename) {
-  if(!filename.startsWith("/")){
+  if (!filename.startsWith("/")) {
     filename = "/" + filename;
   }
   File file = SPIFFS.open(filename, "r");
   if (file) {
     file.close();
     SPIFFS.remove(filename);
-    webserver.sendHeader("Location","/success.html");
+    webserver.sendHeader("Location", "/success.html");
     //Reload all files
     pushAllFilesToJson();
     getButtonJSON();
@@ -116,20 +116,20 @@ void SD_file_delete(String filename) {
 //Gets args for the download
 void File_Download() {
   if (webserver.args() > 0 ) { // Arguments were received
-    if (webserver.hasArg("download")){ 
+    if (webserver.hasArg("download")) {
       SD_file_download(webserver.arg(0));
-      
+
     }
   }
   else SelectInput("File Download", "Enter filename to download", "download", "download");
 }
 
 //Gets args for the delete function
-void File_Delete() { 
-  if (webserver.args() > 0 ) { 
-    if (webserver.hasArg("delete")){ 
+void File_Delete() {
+  if (webserver.args() > 0 ) {
+    if (webserver.hasArg("delete")) {
       SD_file_delete(webserver.arg(0));
-      
+
     }
   }
   else SelectInput("File Delete", "Enter filename to delete", "delete", "delete");
@@ -148,15 +148,15 @@ String getContentType(String filename) {
 //Returns file to user if available
 bool handleFileRead(String path) {
   Serial.println("handleFileRead: " + path);
-  if (path.endsWith("/")) path += "index.html";          
-  String contentType = getContentType(path);          
+  if (path.endsWith("/")) path += "index.html";
+  String contentType = getContentType(path);
   String pathWithGz = path + ".gz";
-  if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) { 
-    if (SPIFFS.exists(pathWithGz))                         
-      path += ".gz";                                         
-    File file = SPIFFS.open(path, "r");                   
-    size_t sent = webserver.streamFile(file, contentType);   
-    file.close();                                        
+  if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) {
+    if (SPIFFS.exists(pathWithGz))
+      path += ".gz";
+    File file = SPIFFS.open(path, "r");
+    size_t sent = webserver.streamFile(file, contentType);
+    file.close();
     Serial.println(String("\tSent file: ") + path);
     return true;
   }
@@ -165,22 +165,22 @@ bool handleFileRead(String path) {
 }
 
 //Handles file upload
-void handleFileUpload(){ 
+void handleFileUpload() {
   HTTPUpload& upload = webserver.upload();
-  if(upload.status == UPLOAD_FILE_START){
+  if (upload.status == UPLOAD_FILE_START) {
     String filename = upload.filename;
-    if(!filename.startsWith("/")) filename = "/"+filename;
+    if (!filename.startsWith("/")) filename = "/" + filename;
     Serial.print("handleFileUpload Name: "); Serial.println(filename);
-    fsUploadFile = SPIFFS.open(filename, "w");            
+    fsUploadFile = SPIFFS.open(filename, "w");
     filename = String();
-  } else if(upload.status == UPLOAD_FILE_WRITE){
-    if(fsUploadFile)
-      fsUploadFile.write(upload.buf, upload.currentSize); 
-  } else if(upload.status == UPLOAD_FILE_END){
-    if(fsUploadFile) {                             
-      fsUploadFile.close();                              
+  } else if (upload.status == UPLOAD_FILE_WRITE) {
+    if (fsUploadFile)
+      fsUploadFile.write(upload.buf, upload.currentSize);
+  } else if (upload.status == UPLOAD_FILE_END) {
+    if (fsUploadFile) {
+      fsUploadFile.close();
       Serial.print("handleFileUpload Size: "); Serial.println(upload.totalSize);
-      webserver.sendHeader("Location","/success.html");      
+      webserver.sendHeader("Location", "/success.html");
       webserver.send(303);
       //Reload all files
       pushAllFilesToJson();
@@ -192,113 +192,131 @@ void handleFileUpload(){
   }
 }
 
-void setCrossOrigin(){
-    webserver.sendHeader(F("Access-Control-Allow-Origin"), F("*"));
-    webserver.sendHeader(F("Access-Control-Max-Age"), F("10000"));
-    webserver.sendHeader(F("Access-Control-Allow-Methods"), F("*"));
-    webserver.sendHeader(F("Access-Control-Allow-Headers"), F("*"));
+void setCrossOrigin() {
+  webserver.sendHeader(F("Access-Control-Allow-Origin"), F("*"));
+  webserver.sendHeader(F("Access-Control-Max-Age"), F("10000"));
+  webserver.sendHeader(F("Access-Control-Allow-Methods"), F("*"));
+  webserver.sendHeader(F("Access-Control-Allow-Headers"), F("*"));
 };
 
 //Listens for requests
-void initiateAPI(){
-  
-    webserver.on("/upload", HTTP_GET, []() {            
-    if (!handleFileRead("/upload.html"))               
-      webserver.send(404, "text/plain", "404: Not Found"); 
-    });
+void initiateAPI() {
 
-   webserver.on("/", HTTP_GET, []() {          
-    if (!handleFileRead("/home.html"))          
-      webserver.send(404, "text/plain", "404: Not Found"); 
-    });
-  
-    webserver.on("/upload", HTTP_POST,                       
-      [](){ webserver.send(200); },                     
-      handleFileUpload                           
-    );
+  webserver.on("/upload", HTTP_GET, []() {
+    if (!handleFileRead("/upload.html"))
+      webserver.send(404, "text/plain", "404: Not Found");
+  });
 
-     webserver.on("/online", HTTP_GET,                       
-      [](){ webserver.send(200); }                                               
-    );
+  webserver.on("/upload", HTTP_POST,
+  []() {
+    webserver.send(200);
+  },
+  handleFileUpload
+              );
 
-    webserver.on("/getoptions", HTTP_GET, []() {
-      setCrossOrigin();
-      String buf;
-      serializeJson(configDoc, buf);
-      webserver.send(200, F("application/json"), buf);
-    });
 
-    webserver.on("/setoptions", HTTP_POST, []() {
-      setCrossOrigin();
-       String postBody = webserver.arg("plain");
-       DeserializationError error = deserializeJson(configDoc, postBody);
-       if(error){
+  webserver.on("/getoptions", HTTP_GET, []() {
+    setCrossOrigin();
+    String buf;
+    serializeJson(configDoc, buf);
+    webserver.send(200, F("application/json"), buf);
+  });
+
+  webserver.on("/setoptions", HTTP_POST, []() {
+    setCrossOrigin();
+    String postBody = webserver.arg("plain");
+    DeserializationError error = deserializeJson(configDoc, postBody);
+    if (error) {
+      webserver.send(404, "text/plain", "404: Not Found");
+    }
+    writeToConfigFile();
+    webserver.send(200);
+    delay(500);
+    ESP.restart();
+  });
+
+  webserver.on("/getbuttonoptions", HTTP_GET, []() {
+    setCrossOrigin();
+    String buf;
+    serializeJson(buttonConfigDoc, buf);
+    webserver.send(200, F("application/json"), buf);
+  });
+
+  webserver.on("/setbuttonoptions", HTTP_POST, []() {
+    setCrossOrigin();
+    String postBody = webserver.arg("plain");
+    DeserializationError error = deserializeJson(buttonConfigDoc, postBody);
+    if (error) {
+      webserver.send(404, "text/plain", "404: Not Found");
+    }
+    writeToButtonConfigFile();
+    webserver.send(200);
+    delay(500);
+    ESP.restart();
+  });
+
+  webserver.on("/getfiles", HTTP_GET, []() {
+    setCrossOrigin();
+    const size_t CAPACITY = JSON_ARRAY_SIZE(15);
+    // allocate the memory for the document
+    StaticJsonDocument<CAPACITY> buttonNamesDoc;
+    JsonArray buttonNames = buttonNamesDoc.to<JsonArray>();
+
+    for (int x = 0; x < amount_of_files; x++) {
+      buttonNames.add(BUTTON_JSON[x]);
+    }
+    String buf;
+    serializeJson(buttonNames, buf);
+    webserver.send(200, F("application/json"), buf);
+    buttonNamesDoc.clear();
+  });
+
+  webserver.on("/createnewfile", HTTP_POST, []() {
+    setCrossOrigin();
+    String postBody = webserver.arg("plain");
+    createNewButtonFile(postBody);
+    webserver.send(200);
+    delay(500);
+    ESP.restart();
+  });
+
+
+  webserver.on("/deletefile", HTTP_POST, []() {
+    setCrossOrigin();
+    String postBody = webserver.arg("plain");
+    deleteButtonFile(postBody);
+    webserver.send(200);
+    delay(500);
+    ESP.restart();
+  });
+
+  webserver.on("/editfile", HTTP_POST, []() {
+    setCrossOrigin();
+    String postBody = webserver.arg("plain");
+    writeToButtonFile(postBody);
+    webserver.send(200);
+    delay(500);
+    ESP.restart();
+  });
+
+  webserver.onNotFound([]() {
+    if (webserver.method() == HTTP_OPTIONS)
+    {
+      webserver.sendHeader("Access-Control-Allow-Origin", "*");
+      webserver.sendHeader("Access-Control-Max-Age", "10000");
+      webserver.sendHeader("Access-Control-Allow-Methods", "*");
+      webserver.sendHeader("Access-Control-Allow-Headers", "*");
+      webserver.send(204);
+    }
+    else
+    {
+      if (!handleFileRead(webserver.uri()))
         webserver.send(404, "text/plain", "404: Not Found");
-       }
-       writeToConfigFile();
-      webserver.send(200);
-      delay(500);
-      ESP.restart();
-    });
+    }
 
-    webserver.on("/getbuttonoptions", HTTP_GET, []() {
-      setCrossOrigin();
-      String buf;
-      serializeJson(buttonConfigDoc, buf);
-      webserver.send(200, F("application/json"), buf);
-    });
+  });
 
-    webserver.on("/setbuttonoptions", HTTP_POST, []() {
-      setCrossOrigin();
-       String postBody = webserver.arg("plain");
-       DeserializationError error = deserializeJson(buttonConfigDoc, postBody);
-       if(error){
-        webserver.send(404, "text/plain", "404: Not Found");
-       }
-      writeToButtonConfigFile();
-      webserver.send(200);
-      delay(500);
-      ESP.restart();
-    });
-
-    webserver.on("/getbuttons", HTTP_GET, []() {
-      setCrossOrigin();
-      String buf;
-      serializeJson(doc, buf);
-      webserver.send(200, F("application/json"), buf);
-    });
-
-    webserver.on("/setbuttons", HTTP_POST, []() {
-      setCrossOrigin();
-       String postBody = webserver.arg("plain");
-       DeserializationError error = deserializeJson(doc, postBody);
-       if(error){
-        webserver.send(404, "text/plain", "404: Not Found");
-       }
-       writeToButtonFile();
-      webserver.send(200);
-      delay(500);
-      ESP.restart();
-    });
-  
-    webserver.onNotFound([]() {
-      if (webserver.method() == HTTP_OPTIONS)
-      {
-          webserver.sendHeader("Access-Control-Allow-Origin", "*");
-          webserver.sendHeader("Access-Control-Max-Age", "10000");
-          webserver.sendHeader("Access-Control-Allow-Methods", "*");
-          webserver.sendHeader("Access-Control-Allow-Headers", "*");
-          webserver.send(204);
-      }
-      else
-      {
-          if (!handleFileRead(webserver.uri()))                 
-            webserver.send(404, "text/plain", "404: Not Found");
-      }                              
-      
-    });
-
-    webserver.on("/download", File_Download);
-    webserver.on("/delete", File_Delete);
-    webserver.on("/freespace", Free_space);
+  //webserver.on("/download", File_Download);
+  //webserver.on("/delete", File_Delete);
+  //webserver.on("/freespace", Free_space);
 }

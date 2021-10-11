@@ -262,8 +262,8 @@
 //#define TFT_RST  PF13 // Nucleo-F767ZI equivalent of D7
 
 //#define TFT_RST  -1   // Set TFT_RST to -1 if the display RESET is connected to processor reset
-                        // Use an Arduino pin for initial testing as connecting to processor reset
-                        // may not work (pulse too short at power up?)
+// Use an Arduino pin for initial testing as connecting to processor reset
+// may not work (pulse too short at power up?)
 
 // ##################################################################################
 //
@@ -309,7 +309,7 @@
 //#define SPI_FREQUENCY  27000000
 // #define SPI_FREQUENCY  40000000
 // #define SPI_FREQUENCY  55000000 // STM32 SPI1 only (SPI2 maximum is 27MHz)
- #define SPI_FREQUENCY  80000000
+#define SPI_FREQUENCY  80000000
 
 // Optional reduced SPI frequency for reading TFT
 #define SPI_READ_FREQUENCY  20000000

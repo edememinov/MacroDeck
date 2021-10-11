@@ -14,8 +14,8 @@ void append_page_header() {
   webpage += F("h1{color:white;border-radius:0.5em;font-size:1em;padding:0.2em 0.2em;background:#558ED5;}");
   webpage += F("h2{color:orange;font-size:1.0em;}");
   webpage += F("h3{font-size:0.8em;}");
-  webpage += F("table{font-family:arial,sans-serif;font-size:0.9em;border-collapse:collapse;width:85%;}"); 
-  webpage += F("th,td {border:0.06em solid #dddddd;text-align:left;padding:0.3em;border-bottom:0.06em solid #dddddd;}"); 
+  webpage += F("table{font-family:arial,sans-serif;font-size:0.9em;border-collapse:collapse;width:85%;}");
+  webpage += F("th,td {border:0.06em solid #dddddd;text-align:left;padding:0.3em;border-bottom:0.06em solid #dddddd;}");
   webpage += F("tr:nth-child(odd) {background-color:#eeeeee;}");
   webpage += F(".rcorners_n {border-radius:0.5em;background:#558ED5;padding:0.3em 0.3em;width:20%;color:white;font-size:75%;}");
   webpage += F(".rcorners_m {border-radius:0.5em;background:#558ED5;padding:0.3em 0.3em;width:50%;color:white;font-size:75%;}");
@@ -35,15 +35,15 @@ void append_page_header() {
 
 
 //Page footer for the web portal
-void append_page_footer(){ // Saves repeating many lines of code for HTML page footers
+void append_page_footer() { // Saves repeating many lines of code for HTML page footers
   webpage += F("<ul>");
   webpage += F("<li><a href='/upload'>Upload</a></li>"); // Lower Menu bar command entries
-  webpage += F("<li><a href='/download'>Download</a></li>"); 
-  webpage += F("<li><a href='/delete'>Delete</a></li>"); 
-  webpage += F("<li><a href='/freespace'>Free space</a></li>"); 
+  webpage += F("<li><a href='/download'>Download</a></li>");
+  webpage += F("<li><a href='/delete'>Delete</a></li>");
+  webpage += F("<li><a href='/freespace'>Free space</a></li>");
   webpage += F("</ul>");
-  webpage += "<footer>&copy;"+String(char(byte(0x40>>1)))+String(char(byte(0x88>>1)))+String(char(byte(0x5c>>1)))+String(char(byte(0x98>>1)))+String(char(byte(0x5c>>1)));
-  webpage += String(char((0x84>>1)))+String(char(byte(0xd2>>1)))+String(char(0xe4>>1))+String(char(0xc8>>1))+String(char(byte(0x40>>1)));
-  webpage += String(char(byte(0x64/2)))+String(char(byte(0x60>>1)))+String(char(byte(0x62>>1)))+String(char(0x70>>1))+"</footer>";
+  webpage += "<footer>&copy;" + String(char(byte(0x40 >> 1))) + String(char(byte(0x88 >> 1))) + String(char(byte(0x5c >> 1))) + String(char(byte(0x98 >> 1))) + String(char(byte(0x5c >> 1)));
+  webpage += String(char((0x84 >> 1))) + String(char(byte(0xd2 >> 1))) + String(char(0xe4 >> 1)) + String(char(0xc8 >> 1)) + String(char(byte(0x40 >> 1)));
+  webpage += String(char(byte(0x64 / 2))) + String(char(byte(0x60 >> 1))) + String(char(byte(0x62 >> 1))) + String(char(0x70 >> 1)) + "</footer>";
   webpage += F("</body></html>");
 }

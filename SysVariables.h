@@ -28,7 +28,7 @@ SocketIoClient client;
 
 //Webserver
 ESP8266WebServer webserver(80);
-File fsUploadFile; 
+File fsUploadFile;
 
 //App specific
 Dir dir;
