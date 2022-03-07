@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <SocketIoClient.h>
 #include <ESP8266WiFi.h> //https://github.com/esp8266/Arduino
 #include <DNSServer.h>
