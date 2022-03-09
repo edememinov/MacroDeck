@@ -44,6 +44,7 @@ DynamicJsonDocument doc(10422);
 JsonObject buttons;
 String configFile = "/config.txt";
 DynamicJsonDocument configDoc(1024);
+DynamicJsonDocument aliveSince(1024);
 JsonObject configJson;
 
 String buttonConfigFile = "/button_config.txt";

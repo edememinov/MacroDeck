@@ -1,32 +1,32 @@
 //Registers a button press
 void handleButtonPress(int keyNumber) {
-  if (chosingFile) {
-    chosingFile = false;
-    chooseFile(keyNumber);
-  }
-
-  else if (altKeyPressed && !chosingFile) {
-    handleBoardChange(keyNumber);
-    altKeyPressed = false;
-  }
-  else if (!altKeyPressed && !chosingFile) {
-    if (buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "socket") {
-      handleSocketCommand(buttons["pages"][page]["buttons"][keyNumber - 1]["command_id"].as<String>());
-    } else if (buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "apiCall") {
-      if (buttons["pages"][page]["buttons"][keyNumber - 1].containsKey("fingerprint")) {
-        handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["fingerprint"].as<String>());
-      } else {
-        handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>());
+    if (chosingFile) {
+      chosingFile = false;
+      chooseFile(keyNumber);
+    }
+  
+    else if (altKeyPressed && !chosingFile) {
+      handleBoardChange(keyNumber);
+      altKeyPressed = false;
+    }
+    else if (!altKeyPressed && !chosingFile) {
+      if (buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "socket") {
+        handleSocketCommand(buttons["pages"][page]["buttons"][keyNumber - 1]["command_id"].as<String>());
+      } else if (buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "apiCall") {
+        if (buttons["pages"][page]["buttons"][keyNumber - 1].containsKey("fingerprint")) {
+          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["fingerprint"].as<String>());
+        } else {
+          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>());
+        }
+      }
+      else {
+        tft.setTextColor(TFT_RED, TFT_WHITE);
+        tft.println("This file is not compatible: " + BUTTON_JSON[currentFile]);
+        tft.println();
+        delay(5000);
+        error = true;
       }
     }
-    else {
-      tft.setTextColor(TFT_RED, TFT_WHITE);
-      tft.println("This file is not compatible: " + BUTTON_JSON[currentFile]);
-      tft.println();
-      delay(5000);
-      error = true;
-    }
-  }
 }
 
 bool hasInput() {
@@ -79,7 +79,7 @@ void calibrateButtons(int pinV) {
   for (int i = 0; i < buttonConfigJson["buttons"].size(); i++) {
     clearScreen();
     tft.print("hold button :");
-    tft.println(i);
+    tft.println(i + 1);
 
     tft.println(analogRead(AD_PIN));
 

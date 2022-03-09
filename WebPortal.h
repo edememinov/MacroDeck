@@ -145,8 +145,16 @@ String getContentType(String filename) {
   return "text/plain";
 }
 
+void setCrossOrigin() {
+  webserver.sendHeader(F("Access-Control-Allow-Origin"), F("*"));
+  webserver.sendHeader(F("Access-Control-Max-Age"), F("10000"));
+  webserver.sendHeader(F("Access-Control-Allow-Methods"), F("*"));
+  webserver.sendHeader(F("Access-Control-Allow-Headers"), F("*"));
+};
+
 //Returns file to user if available
 bool handleFileRead(String path) {
+  setCrossOrigin();
   Serial.println("handleFileRead: " + path);
   if (path.endsWith("/")) path += "index.html";
   String contentType = getContentType(path);
@@ -191,13 +199,6 @@ void handleFileUpload() {
     }
   }
 }
-
-void setCrossOrigin() {
-  webserver.sendHeader(F("Access-Control-Allow-Origin"), F("*"));
-  webserver.sendHeader(F("Access-Control-Max-Age"), F("10000"));
-  webserver.sendHeader(F("Access-Control-Allow-Methods"), F("*"));
-  webserver.sendHeader(F("Access-Control-Allow-Headers"), F("*"));
-};
 
 //Listens for requests
 void initiateAPI() {
@@ -316,7 +317,7 @@ void initiateAPI() {
 
   });
 
-  //webserver.on("/download", File_Download);
-  //webserver.on("/delete", File_Delete);
-  //webserver.on("/freespace", Free_space);
+  webserver.on("/download", File_Download);
+  webserver.on("/delete", File_Delete);
+  webserver.on("/freespace", Free_space);
 }
