@@ -1,5 +1,6 @@
 //All availables variables are here
 #define ServerVersion "1.0"
+#define FirmwareVersion "v 0.1"
 String webpage = "";
 bool   SD_present = false;
 

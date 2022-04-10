@@ -243,6 +243,12 @@ void initiateAPI() {
     webserver.send(200, F("application/json"), buf);
   });
 
+
+  webserver.on("/version", HTTP_GET, []() {
+    setCrossOrigin();
+    webserver.send(200, F("text/plain"), FirmwareVersion);
+  });
+
   webserver.on("/setbuttonoptions", HTTP_POST, []() {
     setCrossOrigin();
     String postBody = webserver.arg("plain");
