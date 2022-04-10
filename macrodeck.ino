@@ -8,6 +8,7 @@
 #include <TFT_eSPI.h>
 #include <SPI.h>
 #include <ArduinoJson.h>
+#include <ElegantOTA.h>
 
 #include "SysVariables.h"
 #include "ScreenHandler.h"
@@ -29,6 +30,7 @@ void setup() {
   showIpAddress();
   initiateSocket();
   //webserver.enableCORS(true);
+  ElegantOTA.begin(&webserver); 
   webserver.begin();
   SPIFFS.begin();
   readLogTimeAlive();

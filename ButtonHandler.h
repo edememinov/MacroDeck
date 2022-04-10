@@ -1,10 +1,9 @@
 //Registers a button press
-void handleButtonPress(int keyNumber) {
+void handlePress(int keyNumber) {
     if (chosingFile) {
       chosingFile = false;
       chooseFile(keyNumber);
     }
-  
     else if (altKeyPressed && !chosingFile) {
       handleBoardChange(keyNumber);
       altKeyPressed = false;
@@ -47,7 +46,7 @@ bool checkButtonValue(int minValue, int maxValue, int buttonId) {
       }
     }
     else {
-      handleButtonPress(buttonId);
+      handlePress(buttonId);
     }
     is_button_pressed = true;
   }

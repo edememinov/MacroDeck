@@ -30,12 +30,9 @@ void pushAllFilesToJson() {
   while (dir.next()) {
     if (dir.fileName().indexOf(".txt") > 0 && dir.fileName().indexOf("config.txt") == -1) {
       if (dir.fileName().indexOf("button_config.txt") == -1) {
-        if(dir.fileName().indexOf("time_alive.txt") == -1){
-          BUTTON_JSON[i] = String() + dir.fileName();
-          i++;
-          amount_of_files = i;
-        }
-       
+        BUTTON_JSON[i] = String() + dir.fileName();
+        i++;
+        amount_of_files = i;
       }
 
     }
@@ -80,14 +77,6 @@ void getButtonJSON() {
   else {
     setErrorToTrue();
   }
-   if(doc.containsKey("pages")){
-      if(!doc["pages"].containsKey("buttons")){
-          setErrorToTrue();
-      }
-    }
-    else{
-      setErrorToTrue();
-    }
 }
 
 //The config file is desirialized to json
@@ -180,8 +169,6 @@ void writeToButtonFile(String jsonButtons) {
   
   DynamicJsonDocument docBackUp(10422);
   DeserializationError error = deserializeJson(docBackUp, jsonButtons);
-  String henk = docBackUp["fileName"];
-  tft.print(henk);
   int index = getPageIndex(docBackUp["fileName"]);
   File file = SPIFFS.open(BUTTON_JSON[index], "w");
   docBackUp.remove("fileName");
