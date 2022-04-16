@@ -9,12 +9,14 @@
 #include <SPI.h>
 #include <ArduinoJson.h>
 #include <ElegantOTA.h>
+#include <PubSubClient.h>
 
 #include "SysVariables.h"
 #include "ScreenHandler.h"
 #include "CSS.h"
 #include "FileHandler.h"
 #include "ExecutionHandler.h"
+#include "MqttHandler.h"
 #include "ButtonHandler.h"
 #include "SocketHandler.h"
 #include "WebPortal.h"

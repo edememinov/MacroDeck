@@ -17,6 +17,8 @@ void handlePress(int keyNumber) {
         } else {
           handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>());
         }
+      }else if(buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "mqtt"){
+        callMqttCommand(buttons["pages"][page]["buttons"][keyNumber - 1]["topic"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["payload"].as<String>());
       }
       else {
         tft.setTextColor(TFT_RED, TFT_WHITE);
