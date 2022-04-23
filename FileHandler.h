@@ -30,9 +30,12 @@ void pushAllFilesToJson() {
   while (dir.next()) {
     if (dir.fileName().indexOf(".txt") > 0 && dir.fileName().indexOf("config.txt") == -1) {
       if (dir.fileName().indexOf("button_config.txt") == -1) {
-        BUTTON_JSON[i] = String() + dir.fileName();
-        i++;
-        amount_of_files = i;
+        if(dir.fileName().indexOf("time_alive.txt") == -1){
+          BUTTON_JSON[i] = String() + dir.fileName();
+          i++;
+          amount_of_files = i;
+        }
+        
       }
 
     }
@@ -207,6 +210,9 @@ void deleteButtonFile(String jsonButtons){
   
   if (dir.fileName().indexOf("button_config.txt") == -1){
     if (dir.fileName().indexOf("config.txt") == -1){
+      if(dir.fileName().indexOf("time_alive.txt") == -1){
+        
+      }
       SPIFFS.remove(fileName);
     }
   }

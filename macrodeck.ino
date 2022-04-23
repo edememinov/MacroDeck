@@ -32,11 +32,11 @@ void setup() {
   showIpAddress();
   initiateSocket();
   //webserver.enableCORS(true);
-  ElegantOTA.begin(&webserver); 
+  ElegantOTA.begin(&webserver);
   webserver.begin();
   SPIFFS.begin();
   readLogTimeAlive();
-  if(aliveSince.as<int>() < 7000){
+  if (aliveSince.as<int>() < 7000) {
     setErrorToTrue();
     tft.println("Boot loop detected please check all txt files");
   }
@@ -51,24 +51,34 @@ void setup() {
       if (configJson["webserverOnly"].as<bool>()) {
         tft.println("Device is in webserver only mode");
       }
-      else{
-        
-        getButtonJSON();   
+      else {
+
+        getButtonJSON();
         getButtonConfigJSON();
         buttons = doc.as<JsonObject>();
-        if(!buttons.isNull()){
+        if (!buttons.isNull()) {
           buttonConfigJson = buttonConfigDoc.as<JsonObject>();
           client.begin(configJson["socketHost"].as<char*>(), configJson["socketPort"].as<int>(), path);
+          mqttClient.setServer(configJson["mqttBroker"].as<char*>(), configJson["mqttPort"].as<int>());
+          while (!mqttClient.connected()) {
+            String client_id = configJson["mqttClientID"].as<String>();
+            if (mqttClient.connect(client_id.c_str(), configJson["mqttUsername"].as<char*>(), configJson["mqttPassword"].as<char*>())) {
+            } else {
+              tft.print("failed with state ");
+              tft.print(mqttClient.state());
+              delay(2000);
+            }
+          }
           setCurrentBoard();
           interateOverButtonsOnPage();
         }
-        
+
       }
     }
-    else{
+    else {
       tft.println("webserverOnly bool is missing. Please update the configuration through the app");
     }
-    
+
   } else {
     tft.println("An error has occured, please fix the error and restart the device.");
     tft.println("The web-interface is available.");
@@ -88,42 +98,43 @@ void setup() {
       tft.println("Device is in development mode");
     }
   }
-  else{
+  else {
     tft.println("calibrationMode bool is missing. Please update the configuration through the app");
   }
 }
 
+
 void loop() {
 
-  if(millis() > 8000){
-    if(millis() < 8100){
+  if (millis() > 8000) {
+    if (millis() < 8100) {
       writeLogTimeAlive();
     }
   }
 
   if (configJson.containsKey("development")) {
     if (configJson["development"].as<bool>()) {
-      if(analogRead(AD_PIN) > buttonConfigJson["defaultValue"].as<int>() + 20){
+      if (analogRead(AD_PIN) > buttonConfigJson["defaultValue"].as<int>() + 20) {
         tft.println(analogRead(AD_PIN));
       }
-      if(analogRead(AD_PIN) >= buttonConfigJson["buttons"][15]["minValue"].as<int>() && analogRead(AD_PIN) <= buttonConfigJson["buttons"][15]["maxValue"].as<int>()){
+      if (analogRead(AD_PIN) >= buttonConfigJson["buttons"][15]["minValue"].as<int>() && analogRead(AD_PIN) <= buttonConfigJson["buttons"][15]["maxValue"].as<int>()) {
         delay(2000);
         clearScreen();
       }
     }
     else {
-      if(configJson.containsKey("webserverOnly")){
-        if(configJson["webserverOnly"].as<bool>()){
+      if (configJson.containsKey("webserverOnly")) {
+        if (configJson["webserverOnly"].as<bool>()) {
           //Do completely nothing
         }
-        else{
-           handleButtonPress();
+        else {
+          handleButtonPress();
         }
       }
-      else{
-         tft.println("webserverOnly is missing. Please update the configuration through the app");
+      else {
+        tft.println("webserverOnly is missing. Please update the configuration through the app");
       }
-      
+
 
     }
   }
@@ -132,7 +143,8 @@ void loop() {
   }
   delay(100);
   client.loop();
+  mqttClient.loop();
   webserver.handleClient();
   tft.setTextColor(TFT_BLACK, TFT_WHITE);
-  
+
 }

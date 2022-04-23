@@ -1,6 +1,6 @@
 //All availables variables are here
 #define ServerVersion "1.0"
-#define FirmwareVersion "v 0.2"
+#define FirmwareVersion "v 0.3"
 String webpage = "";
 bool   SD_present = false;
 
@@ -29,8 +29,8 @@ SocketIoClient client;
 
 //MQTT
 WiFiClient espClient;
-const int mqtt_port = 1883;
 PubSubClient mqttClient(espClient);
+
 
 //Webserver
 ESP8266WebServer webserver(80);
