@@ -145,6 +145,6 @@ void loop() {
   client.loop();
   mqttClient.loop();
   webserver.handleClient();
-  tft.setTextColor(TFT_BLACK, TFT_WHITE);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
 }
