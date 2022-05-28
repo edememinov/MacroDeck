@@ -13,9 +13,9 @@ void handlePress(int keyNumber) {
         handleSocketCommand(buttons["pages"][page]["buttons"][keyNumber - 1]["command_id"].as<String>());
       } else if (buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "apiCall") {
         if (buttons["pages"][page]["buttons"][keyNumber - 1].containsKey("fingerprint")) {
-          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["fingerprint"].as<String>());
+          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["requestType"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["headers"].to<JsonArray>(), buttons["pages"][page]["buttons"][keyNumber - 1]["body"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["fingerprint"].as<String>());
         } else {
-          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>());
+          handleApiCall(buttons["pages"][page]["buttons"][keyNumber - 1]["url"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["requestType"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["headers"].to<JsonArray>(), buttons["pages"][page]["buttons"][keyNumber - 1]["body"].as<String>());
         }
       }else if(buttons["pages"][page]["buttons"][keyNumber - 1]["type"].as<String>() == "mqtt"){
         callMqttCommand(buttons["pages"][page]["buttons"][keyNumber - 1]["topic"].as<String>(), buttons["pages"][page]["buttons"][keyNumber - 1]["payload"].as<String>());

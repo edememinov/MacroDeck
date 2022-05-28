@@ -58,17 +58,22 @@ void setup() {
         buttons = doc.as<JsonObject>();
         if (!buttons.isNull()) {
           buttonConfigJson = buttonConfigDoc.as<JsonObject>();
-          client.begin(configJson["socketHost"].as<char*>(), configJson["socketPort"].as<int>(), path);
-          mqttClient.setServer(configJson["mqttBroker"].as<char*>(), configJson["mqttPort"].as<int>());
-          while (!mqttClient.connected()) {
-            String client_id = configJson["mqttClientID"].as<String>();
-            if (mqttClient.connect(client_id.c_str(), configJson["mqttUsername"].as<char*>(), configJson["mqttPassword"].as<char*>())) {
-            } else {
-              tft.print("failed with state ");
-              tft.print(mqttClient.state());
-              delay(2000);
+          if (configJson["deckboardConnection"].as<bool>()){
+            client.begin(configJson["socketHost"].as<char*>(), configJson["socketPort"].as<int>(), path);
+          }
+          if (configJson["mqttConnection"].as<bool>()){
+            mqttClient.setServer(configJson["mqttBroker"].as<char*>(), configJson["mqttPort"].as<int>());
+            while (!mqttClient.connected()) {
+              String client_id = configJson["mqttClientID"].as<String>();
+              if (mqttClient.connect(client_id.c_str(), configJson["mqttUsername"].as<char*>(), configJson["mqttPassword"].as<char*>())) {
+              } else {
+                tft.print("failed with state ");
+                tft.print(mqttClient.state());
+                delay(2000);
+              }
             }
           }
+          
           setCurrentBoard();
           interateOverButtonsOnPage();
         }
@@ -142,8 +147,12 @@ void loop() {
     tft.println("development is missing. Please update the configuration through the app");
   }
   delay(100);
-  client.loop();
-  mqttClient.loop();
+  if (configJson["deckboardConnection"].as<bool>()){
+    client.loop();
+  }
+  if (configJson["mqttConnection"].as<bool>()){
+    mqttClient.loop();
+  }
   webserver.handleClient();
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
